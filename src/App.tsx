@@ -5,9 +5,10 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import LibroDelMesPage from './pages/LibroDelMesPage';
 import Calendario from './pages/Calendario';
+import PerfilUsuario from './pages/PerfilUsuario';
+import AdminDashboard from './pages/AdminDashboard';
 import './App.css';
 
-// Placeholder components for routes
 const Library = () => <div className="p-4">Biblioteca</div>
 const Profile = () => <div className="p-4">Perfil</div>
 
@@ -24,7 +25,8 @@ function App() {
             <Route path="/libro-del-mes" element={<LibroDelMesPage />} />
             <Route path="/calendario" element={<Calendario />} />
             <Route path="/biblioteca" element={<Library />} />
-            <Route path="/perfil" element={<Profile />} />
+            <Route path="/perfil" element={<PerfilUsuario />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </main>
         <Footer />
