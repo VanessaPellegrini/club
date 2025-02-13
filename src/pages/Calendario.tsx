@@ -16,6 +16,10 @@ interface MonthBook {
   description: string;
 }
 
+interface ImageModule {
+  default: string;
+}
+
 const monthNames = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
   'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
@@ -26,7 +30,6 @@ const Calendario: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [monthBook, setMonthBook] = useState<MonthBook | null>(null);
 
-  // Mock data - En una implementación real, esto vendría de una API
   const mockEvents: Event[] = [
     {
       id: '1',
@@ -51,8 +54,7 @@ const Calendario: React.FC = () => {
     }
   ];
 
-  const mockBookCovers: Record<string, () => Promise<{ default: string }>> = 
-    import.meta.glob('../assets/books_cover/*');
+  const mockBookCovers = import.meta.glob('../assets/books_cover/*');
 
   useEffect(() => {
     // Filtrar eventos del mes actual
@@ -66,7 +68,7 @@ const Calendario: React.FC = () => {
     const loadMonthBook = async () => {
       const covers = Object.keys(mockBookCovers);
       if (covers.length > 0) {
-        const module = await mockBookCovers[covers[0]]();
+        const module = await mockBookCovers[covers[0]]() as ImageModule;
         setMonthBook({
           cover: module.default,
           title: 'Libro del Mes',
@@ -106,7 +108,6 @@ const Calendario: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header y Navegación */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Calendario de Eventos</h1>
         <div className="flex items-center space-x-4">
@@ -129,7 +130,6 @@ const Calendario: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Libro del Mes */}
         {monthBook && (
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h3 className="text-xl font-semibold mb-4">Libro del Mes</h3>
@@ -148,7 +148,6 @@ const Calendario: React.FC = () => {
           </div>
         )}
 
-        {/* Lista de Eventos */}
         <div className="bg-white rounded-xl shadow-lg p-6">
           <h3 className="text-xl font-semibold mb-4">Eventos del Mes</h3>
           <div className="space-y-4">
